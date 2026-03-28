@@ -1,9 +1,13 @@
 import os
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from urllib.parse import urlparse
 
 
 class MyHandler(BaseHTTPRequestHandler):
     def do_GET(self):
+        if urlparse(self.path).path != "/":
+            self.send_error(404)
+            return
         self.send_response(200)
         self.send_header("Content-type", "text/plain")
         self.end_headers()
