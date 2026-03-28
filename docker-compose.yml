@@ -4,6 +4,14 @@ services:
     image: effective-mobile/devops-backend:1.0.0
     container_name: em_backend
     restart: always
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 100
     environment:
       - PORT=${APP_PORT}
     expose:
