@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Окружения и локальные секреты в каталоге backend
+.venv/
+venv/
+.env
+
+# Git / IDE
+.git/
+.gitignore
+.idea/
+.vscode/
+
+*.log

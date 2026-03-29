@@ -1,0 +1,50 @@
+services:
+  backend:
+    build: ./backend
+    image: effective-mobile/devops-backend:1.0.0
+    container_name: em_backend
+    restart: always
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 100
+    environment:
+      - PORT=${APP_PORT}
+    expose:
+      - "${APP_PORT}"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import os, urllib.request; urllib.request.urlopen('http://127.0.0.1:' + os.environ['PORT'] + '/', timeout=3)",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - em_network
+
+  nginx:
+    build: ./nginx
+    image: effective-mobile/devops-nginx:1.0.0
+    container_name: em_nginx
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - em_network
+
+networks:
+  em_network:
+    driver: bridge
+
