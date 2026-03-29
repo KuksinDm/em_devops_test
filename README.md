@@ -77,6 +77,7 @@ Hello from Effective Mobile!
 
 ```text
 ├── backend/
+│   ├── .dockerignore
 │   ├── Dockerfile
 │   └── app.py
 ├── nginx/
